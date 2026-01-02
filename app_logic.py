@@ -197,6 +197,75 @@ class AppLogic:
         
         return final_answer, provider_report
     
+    def process_email_message(self, 
+                              sender_email: str,
+                              thread_id: str,
+                              email_body: str,
+                              conversation_manager) -> str:
+        """
+        Process an email message and generate AI response.
+        
+        Args:
+            sender_email: Email address of the sender
+            thread_id: Gmail thread ID (used as conversation key)
+            email_body: Content of the email
+            conversation_manager: GmailConversationManager instance
+            
+        Returns:
+            AI-generated response text
+        """
+        print(f"Processing email from {sender_email} in thread {thread_id}")
+        
+        # Format the user message for email context
+        formatted_user_message = f"{sender_email} wrote: {email_body}"
+        
+        # Add to conversation history
+        conversation_manager.add_message(thread_id, "user", formatted_user_message, sender_email)
+        
+        # Get conversation history
+        messages_history = conversation_manager.get_conversation(thread_id)
+        
+        # Plugin processing - preprocess messages before sending to AI
+        current_provider = self.current_provider or "openai"  # Default provider
+        
+        for plugin in PLUGINS:
+            try:
+                if plugin.is_plugin_applicable(messages_history, current_provider):
+                    plugin_name = plugin.__name__.split('.')[-1]
+                    print(f"Plugin {plugin_name} triggered for email.")
+                    
+                    # Process messages through plugin
+                    updated_messages = plugin.process_messages(messages_history, current_provider)
+                    if updated_messages:
+                        messages_history = updated_messages
+                        print(f"Email messages processed by plugin: {plugin_name}")
+                        break  # Only first applicable plugin processes
+            except Exception as e:
+                print(f"Error executing plugin {plugin.__name__} for email: {e}")
+        
+        # Generate AI response
+        final_ai_answer, provider_report, diag_info = self._generate_and_verify_answer(
+            messages_history, 
+            email_body
+        )
+        
+        # Add AI response to conversation history
+        conversation_manager.add_message(thread_id, "assistant", final_ai_answer)
+        
+        print(f"Email conversation length for thread {thread_id}: {len(messages_history) + 1}")
+        
+        # For emails, we don't apply Telegram-specific modifications
+        # but we can apply basic formatting if needed
+        final_answer = final_ai_answer
+        
+        # Optionally add diagnostic info for emails too
+        if SHOW_DIAG_INFO7:
+            diag_str = format_diag_info(diag_info)
+            final_answer += f"\n\n{diag_str}"
+        
+        return final_answer
+
+    
     # Plugin Management Methods
     def get_plugin_status(self) -> dict:
         """Get the current status of all plugins."""

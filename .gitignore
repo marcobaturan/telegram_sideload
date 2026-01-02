@@ -10,3 +10,7 @@ context_for_debug.txt
 expendable_shrinked.txt
 .telegram_sideload_cache/
 TEMP_DATA/
+
+# Gmail API credentials and tokens
+credentials.json
+token.json

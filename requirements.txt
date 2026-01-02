@@ -9,3 +9,8 @@ requests==2.32.3 # for making HTTP requests
 # Plugin dependencies
 youtube-transcript-api>=0.6.0
 beautifulsoup4>=4.12.0
+
+# Gmail API dependencies
+google-auth-oauthlib>=1.2.0
+google-auth-httplib2>=0.2.0
+google-api-python-client>=2.100.0
