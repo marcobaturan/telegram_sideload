@@ -7,8 +7,8 @@ This module contains all configuration settings for the Gmail integration.
 import os
 
 # Gmail API Settings
-GMAIL_CREDENTIALS_FILE = os.getenv("GMAIL_CREDENTIALS_FILE", "credentials.json")
-GMAIL_TOKEN_FILE = os.getenv("GMAIL_TOKEN_FILE", "token.json")
+GMAIL_CREDENTIALS_FILE = os.getenv("GMAIL_CREDENTIALS_FILE", "plugins/gmail_bot/credentials.json")
+GMAIL_TOKEN_FILE = os.getenv("GMAIL_TOKEN_FILE", "plugins/gmail_bot/token.json")
 
 # Gmail API Scopes
 # We need to read emails and send emails

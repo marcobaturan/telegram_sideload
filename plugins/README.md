@@ -84,6 +84,17 @@ Plugins receive the active AI provider (e.g., "openai", "anthropic", "gemini") a
 - **Supported Providers:** Gemini, OpenAI
 - **Action:** Blocks request if provider doesn't support generation
 
+### Standalone Services
+
+#### 📧 `gmail_bot`
+- **Purpose:** Email-based conversations with the AI sideload
+- **Trigger:** Emails with subject "SIDELOAD-MESSAGE"
+- **Process:** Monitors Gmail, processes emails through AI pipeline, sends replies
+- **Requirements:** `google-auth-oauthlib`, `google-auth-httplib2`, `google-api-python-client`
+- **Compatibility:** Runs as independent service alongside Telegram bot
+- **Note:** Not a message preprocessor - runs as separate process
+- **Setup:** See [Gmail Bot Plugin README](gmail_bot/README.md)
+
 ## Plugin Management
 
 ### Configuration File

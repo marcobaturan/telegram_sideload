@@ -6,7 +6,7 @@ Chat with your AI sideload in Telegram. This bot fetches a "mindfile" from a Git
 
 -   **Modular Worker Architecture**: The bot uses a pipeline of workers, starting with a `DoormanWorker` to classify requests. An `IntegrationWorker` then polls multiple `DataWorker` instances in parallel, synthesizes their answers, and passes the result through `Style` and `QualityChecks` workers.
 -   **Plugin System**: Extensible plugin architecture for preprocessing messages, validating multimodal content, and transforming user input before it reaches the AI pipeline. See [Plugin Documentation](plugins/README.md) for details.
--   **Gmail Integration**: Email-based conversations with the bot. Send emails with subject "SIDELOAD-MESSAGE" to have epistolary conversations with your AI sideload. See [Gmail Setup Guide](docs/gmail_setup.md) for details.
+-   **Gmail Bot Plugin**: Email-based conversations with the bot. Send emails with subject "SIDELOAD-MESSAGE" to have epistolary conversations with your AI sideload. See [Gmail Bot Plugin](plugins/gmail_bot/README.md) for details.
 -   **Multi-Provider Support via OpenRouter**: The bot leverages OpenRouter to access a wide range of models from different providers (Google, Anthropic, OpenAI, etc.). It uses a cascading fallback mechanism to ensure high availability.
 -   **Quality Control**: Responses are automatically checked for quality, with a built-in retry mechanism to meet desired standards.
 -   **Dynamic Mindfile**: The bot automatically pulls and updates its mindfile from a specified GitHub repository.
@@ -206,17 +206,19 @@ Control plugins directly from Telegram:
 
 For detailed information about the plugin system, including how to create custom plugins, see the [Plugin System Documentation](plugins/README.md).
 
-## Gmail Integration
+## Gmail Bot Plugin
 
-The bot can also respond to emails, enabling epistolary (letter-based) conversations with your AI sideload.
+The bot can also respond to emails via the Gmail Bot plugin, enabling epistolary (letter-based) conversations with your AI sideload.
 
 ### Setup
 
-See the [Gmail Setup Guide](docs/gmail_setup.md) for detailed instructions on:
-- Creating Google Cloud credentials
-- Configuring OAuth 2.0
-- Setting up environment variables
-- First-time authentication
+See the comprehensive setup guide: [Gmail Bot Plugin Setup](plugins/gmail_bot/README.md)
+
+Quick overview:
+- Create Google Cloud credentials
+- Configure OAuth 2.0
+- Set environment variables
+- Run first-time authentication
 
 ### Usage
 
@@ -228,20 +230,20 @@ See the [Gmail Setup Guide](docs/gmail_setup.md) for detailed instructions on:
 
 3. **Reply to continue** the conversation - the bot maintains context within the email thread
 
-### Running Gmail Service
+### Running Gmail Bot
 
-Start the Gmail service independently:
+Start the Gmail bot independently:
 ```bash
-python3 main_gmail.py
+python3 plugins/gmail_bot/main_gmail.py
 ```
 
-Or run both Telegram and Gmail services simultaneously:
+Or run both Telegram and Gmail bots simultaneously:
 ```bash
-# Terminal 1
+# Terminal 1 - Telegram bot
 python3 main.py
 
-# Terminal 2
-python3 main_gmail.py
+# Terminal 2 - Gmail bot
+python3 plugins/gmail_bot/main_gmail.py
 ```
 
 Both services share the same AI pipeline and mindfile.

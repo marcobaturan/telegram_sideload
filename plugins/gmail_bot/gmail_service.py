@@ -16,7 +16,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from gmail_config import (
+from .gmail_config import (
     GMAIL_CREDENTIALS_FILE,
     GMAIL_TOKEN_FILE,
     GMAIL_SCOPES,

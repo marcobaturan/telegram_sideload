@@ -7,7 +7,7 @@ Maps Gmail thread IDs to conversation contexts.
 
 import time
 from typing import Dict, List, Optional
-from gmail_config import CONVERSATION_EXPIRATION_SECONDS
+from .gmail_config import CONVERSATION_EXPIRATION_SECONDS
 
 
 class GmailConversationManager:

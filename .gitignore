@@ -11,6 +11,6 @@ expendable_shrinked.txt
 .telegram_sideload_cache/
 TEMP_DATA/
 
-# Gmail API credentials and tokens
-credentials.json
-token.json
+# Gmail Bot Plugin credentials and tokens
+plugins/gmail_bot/credentials.json
+plugins/gmail_bot/token.json

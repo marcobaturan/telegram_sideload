@@ -6,20 +6,23 @@ This is the main entry point for the Gmail-based sideload bot.
 It runs independently from the Telegram bot but shares the same AI pipeline.
 
 Usage:
-    python3 main_gmail.py
+    From project root: python3 plugins/gmail_bot/main_gmail.py
 
 Setup:
     See docs/gmail_setup.md for detailed setup instructions.
 """
 
-import asyncio
+import sys
+import os
 import time
 import signal
-import sys
 
-from gmail_service import GmailService
-from gmail_conversation_manager import GmailConversationManager
-from gmail_config import (
+# Add project root to path to import framework modules
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
+
+from plugins.gmail_bot.gmail_service import GmailService
+from plugins.gmail_bot.gmail_conversation_manager import GmailConversationManager
+from plugins.gmail_bot.gmail_config import (
     GMAIL_POLL_INTERVAL_SECONDS,
     GMAIL_SERVICE_LOG_PREFIX,
     EMAIL_SPECIFIC_PROMPT
